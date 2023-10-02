@@ -33,18 +33,15 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
         // console.log(e.target);
         if (e.target.value.trim() === '') { // Colocar trim() nos ayuda a identificar que no exista espacios vacíos ya que si no lo agregamos, dichos espacios serán considerados como caracteres y nuestra validación no funcionará como esperamos.
             mostrarAlerta(`El Campo ${e.target.id} es obligatorio`, e.target.parentElement); // Con e.target.parentElement tomamos el elemento padre del ID en relación.
-        } else {
-            console.log('NO esta Vacio');
+            return;
         }
+
+        limpiarAlerta(e.target.parentElement);
     }
 
     // Función para mostrar Alerta
     function mostrarAlerta(mensaje, referencia) {
-        // Comprueba si ya existe una alerta
-        const alerta = referencia.querySelector('.bg-red-600');
-        if(alerta) {
-            alerta.remove();
-        }
+        limpiarAlerta(referencia);
 
         // Generar Alerta en HTML
         const error = document.createElement('P');
@@ -53,5 +50,14 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
         
         // Inyectar el error al formulario
         referencia.appendChild(error); // Seleccionamos el formulario y creamos un elemento de error, la diferencia con innerHTML es que este segundo reemplaza todo HTML.
+    }
+
+    // Función para limpiar Alerta
+    function limpiarAlerta(referencia) {
+        // Comprueba si ya existe una alerta
+        const alerta = referencia.querySelector('.bg-red-600');
+        if(alerta) {
+            alerta.remove();
+        }
     }
 });
