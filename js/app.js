@@ -30,18 +30,19 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
 
     // Función para validar el formulario
     function validar(e) {
+        // console.log(e.target.id);
         if (e.target.value.trim() === '') { // Colocar trim() nos ayuda a identificar que no exista espacios vacíos ya que si no lo agregamos, dichos espacios serán considerados como caracteres y nuestra validación no funcionará como esperamos.
-            mostrarAlerta();
+            mostrarAlerta(`El Campo ${e.target.id} es obligatorio`);
         } else {
             console.log('NO esta Vacio');
         }
     }
 
     // Función para mostrar Alerta
-    function mostrarAlerta() {
+    function mostrarAlerta(mensaje) {
         // Generar Alerta en HTML
         const error = document.createElement('P');
-        error.textContent = 'Hubo un error...';
+        error.textContent = mensaje;
         error.classList.add('bg-red-600', 'text-white', 'p-2', 'text-center');
         
         // Inyectar el error al formulario
