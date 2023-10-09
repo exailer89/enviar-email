@@ -17,6 +17,12 @@
 
 document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez todo el código HTML haya sido descargado
 
+    const emailFullValidation = {
+        email: '',
+        asunto: '',
+        mensaje: ''
+    }
+
     // Seleccionar los elementos de la interfaz
     const inputEmail = document.querySelector('#email');
     const inputAsunto = document.querySelector('#asunto');
@@ -42,6 +48,12 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
         }
 
         limpiarAlerta(e.target.parentElement);
+
+        // Asignar los valores
+        emailFullValidation[e.target.name] = e.target.value.trim().toLowerCase();
+
+        // Comprobar el objeto de email
+        comprobarEmail();
     }
 
     // Función para mostrar Alerta
@@ -72,4 +84,11 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
         const resultado = regex.test(email); // El método test() ejecuta la búsqueda de una ocurrencia entre una expresión regular y una cadena especificada. Devuelve true o false.
         return resultado;
     }
+
+    // Funcion para comprobar el Email
+    function comprobarEmail() {
+        // console.log(emailFullValidation); // Permite ver como se van llenando las propiedades del objeto cada que pasa una validación.
+        console.log(Object.values(emailFullValidation).includes('')); // Con Objet.values podemos ver el valor del objeto, si colocáramos Objet.keys nos mostraria solo las llaves. || Con includes('') le colocamos un string vació, esto lo que hará será mandarnos true si existe por lo menos un campo vacio.
+    }
+
 });
