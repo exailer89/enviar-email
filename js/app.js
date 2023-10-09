@@ -30,25 +30,14 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
     const formulario = document.querySelector('#formulario');
     const btnSubmit = document.querySelector('#formulario button[type="submit"]');
     const btnReset = document.querySelector('#formulario button[type="reset"]');
+    const spinner = document.querySelector('#spinner');
     
     // Asignar Eventos
     inputEmail.addEventListener('input', validar);
     inputAsunto.addEventListener('input', validar);
     inputMensaje.addEventListener('input', validar);
-    
-    btnReset.addEventListener('click', function(e) {
-        e.preventDefault; // Cancela el evento si este es cancelable, sin detener el resto del funcionamiento del evento, es decir, puede ser llamado de nuevo.
-
-        // Reiniciar el Objeto
-        emailFullValidation.email = '';
-        emailFullValidation.asunto = '';
-        emailFullValidation.mensaje = '';
-
-        // Resetear Formulario
-        formulario.reset();
-
-        comprobarEmail();
-    });
+    formulario.addEventListener('submit', enviarEmail);
+    btnReset.addEventListener('click', resetearFormulario);
 
     // Función para validar el formulario
     function validar(e) {
@@ -120,4 +109,27 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
         btnSubmit.disabled = false;
     }
 
+    // Función para enviar el Email
+    function enviarEmail(e) {
+        e.preventDefault();
+
+        // Añadir/retirar clases para que se muestre/oculte el spinner.
+        spinner.classList.add('flex');
+        spinner.classList.remove('hidden');
+    }
+
+    // Funcion para resetear el formulario
+    function resetearFormulario(e) {
+        e.preventDefault; // Cancela el evento si este es cancelable, sin detener el resto del funcionamiento del evento, es decir, puede ser llamado de nuevo.
+
+        // Reiniciar el Objeto
+        emailFullValidation.email = '';
+        emailFullValidation.asunto = '';
+        emailFullValidation.mensaje = '';
+
+        // Resetear Formulario
+        formulario.reset();
+
+        comprobarEmail();
+    }
 });
