@@ -29,11 +29,26 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
     const inputMensaje = document.querySelector('#mensaje');
     const formulario = document.querySelector('#formulario');
     const btnSubmit = document.querySelector('#formulario button[type="submit"]');
+    const btnReset = document.querySelector('#formulario button[type="reset"]');
     
     // Asignar Eventos
     inputEmail.addEventListener('input', validar);
     inputAsunto.addEventListener('input', validar);
     inputMensaje.addEventListener('input', validar);
+    
+    btnReset.addEventListener('click', function(e) {
+        e.preventDefault; // Cancela el evento si este es cancelable, sin detener el resto del funcionamiento del evento, es decir, puede ser llamado de nuevo.
+
+        // Reiniciar el Objeto
+        emailFullValidation.email = '';
+        emailFullValidation.asunto = '';
+        emailFullValidation.mensaje = '';
+
+        // Resetear Formulario
+        formulario.reset();
+
+        comprobarEmail();
+    });
 
     // Función para validar el formulario
     function validar(e) {
