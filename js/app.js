@@ -111,17 +111,24 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
 
     // Función para enviar el Email
     function enviarEmail(e) {
-        e.preventDefault();
+        e.preventDefault(); // Cancela el evento si este es cancelable, sin detener el resto del funcionamiento del evento, es decir, puede ser llamado de nuevo.
 
         // Añadir/retirar clases para que se muestre/oculte el spinner.
         spinner.classList.add('flex');
         spinner.classList.remove('hidden');
+
+        // Despues de 4 segundos, ocultamos el Spinner y reiniciamos el formulario.
+        setTimeout(() => {
+            spinner.classList.remove('flex');
+            spinner.classList.add('hidden');
+
+            // Reiniciar el Objeto
+            resetearFormulario();
+        }, 4000);
     }
 
     // Funcion para resetear el formulario
-    function resetearFormulario(e) {
-        e.preventDefault; // Cancela el evento si este es cancelable, sin detener el resto del funcionamiento del evento, es decir, puede ser llamado de nuevo.
-
+    function resetearFormulario() {
         // Reiniciar el Objeto
         emailFullValidation.email = '';
         emailFullValidation.asunto = '';
