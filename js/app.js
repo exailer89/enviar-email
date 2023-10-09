@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
             return;
         }
 
+        if (e.target.id === 'email' && !validarEmail(e.target.value)) {
+            mostrarAlerta('El email no es válido', e.target.parentElement);
+            return;
+        }
+
         limpiarAlerta(e.target.parentElement);
     }
 
@@ -59,5 +64,12 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
         if(alerta) {
             alerta.remove();
         }
+    }
+
+    // Función para validar el Email
+    function validarEmail(email) {
+        const regex =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/; // Expresión Regular para validar el Email.
+        const resultado = regex.test(email); // El método test() ejecuta la búsqueda de una ocurrencia entre una expresión regular y una cadena especificada. Devuelve true o false.
+        return resultado;
     }
 });
