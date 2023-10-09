@@ -28,22 +28,27 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
     const inputAsunto = document.querySelector('#asunto');
     const inputMensaje = document.querySelector('#mensaje');
     const formulario = document.querySelector('#formulario');
+    const btnSubmit = document.querySelector('#formulario button[type="submit"]');
     
     // Asignar Eventos
-    inputEmail.addEventListener('blur', validar);
-    inputAsunto.addEventListener('blur', validar);
-    inputMensaje.addEventListener('blur', validar);
+    inputEmail.addEventListener('input', validar);
+    inputAsunto.addEventListener('input', validar);
+    inputMensaje.addEventListener('input', validar);
 
     // Función para validar el formulario
     function validar(e) {
         // console.log(e.target);
         if (e.target.value.trim() === '') { // Colocar trim() nos ayuda a identificar que no exista espacios vacíos ya que si no lo agregamos, dichos espacios serán considerados como caracteres y nuestra validación no funcionará como esperamos.
             mostrarAlerta(`El Campo ${e.target.id} es obligatorio`, e.target.parentElement); // Con e.target.parentElement tomamos el elemento padre del ID en relación.
+            emailFullValidation[e.target.name] = ''; // Reinicia el objeto emailFullValidation y lo deja vacioo para que nuevamente se muestren las alertas.
+            comprobarEmail();
             return;
         }
 
         if (e.target.id === 'email' && !validarEmail(e.target.value)) {
             mostrarAlerta('El email no es válido', e.target.parentElement);
+            emailFullValidation[e.target.name] = ''; // Reinicia el objeto emailFullValidation y lo deja vacioo para que nuevamente se muestren las alertas.
+            comprobarEmail();
             return;
         }
 
@@ -87,8 +92,17 @@ document.addEventListener('DOMContentLoaded', function() { // Se ejecuta una vez
 
     // Funcion para comprobar el Email
     function comprobarEmail() {
-        // console.log(emailFullValidation); // Permite ver como se van llenando las propiedades del objeto cada que pasa una validación.
-        console.log(Object.values(emailFullValidation).includes('')); // Con Objet.values podemos ver el valor del objeto, si colocáramos Objet.keys nos mostraria solo las llaves. || Con includes('') le colocamos un string vació, esto lo que hará será mandarnos true si existe por lo menos un campo vacio.
+        //console.log(emailFullValidation); // Permite ver como se van llenando las propiedades del objeto cada que pasa una validación.
+        //console.log(Object.values(emailFullValidation).includes('')); // Con Objet.values podemos ver el valor del objeto, si colocáramos Objet.keys nos mostraria solo las llaves. || Con includes('') le colocamos un string vació, esto lo que hará será mandarnos true si existe por lo menos un campo vacio.
+
+        if(Object.values(emailFullValidation).includes('')) {
+            btnSubmit.classList.add('opacity-50');
+            btnSubmit.disabled = true;
+            return;
+        }
+
+        btnSubmit.classList.remove('opacity-50');
+        btnSubmit.disabled = false;
     }
 
 });
